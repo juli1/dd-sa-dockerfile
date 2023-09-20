@@ -1,0 +1,6 @@
+rulesets:
+  - docker-best-practices
+  - python-best-practices
+  - python-inclusive
+  - python-security
+  - python-flask
