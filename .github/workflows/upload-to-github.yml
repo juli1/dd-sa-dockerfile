@@ -18,7 +18,7 @@ jobs:
         unzip datadog-static-analyzer >/dev/null 2>&1 || exit 1 \
         export CLI_LOCATION=$TOOL_DIRECTORY/datadog-static-analyzer
         echo "CLI LOCATION: $CLI_LOCATION"
-        $CLI_LOCATION -g -i "${GITHUB_WORKSPACE}" -o /tmp/output.sarif -f sarif --cpus 2 || exit 1
+        $TOOL_DIRECTORY/datadog-static-analyzer -g -i "${GITHUB_WORKSPACE}" -o /tmp/output.sarif -f sarif --cpus 2 || exit 1
     - name: Upload SARIF to GitHub using the upload-sarif action
       uses: github/codeql-action/upload-sarif@v2
       with:
