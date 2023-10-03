@@ -6,7 +6,7 @@
 ARG ROOT_PATH=instructure
 FROM --platform=${TARGETPLATFORM} ${ROOT_PATH}/core:jammy
 
-MAINTAINER Instructure
+LABEL maintainer="Instructure"
 
 USER root
 
