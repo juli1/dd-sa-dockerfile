@@ -1,0 +1,23 @@
+on: [push]
+
+jobs:
+  check-quality:
+    runs-on: ubuntu-latest
+    name: Datadog Static Analyzer
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: apt-get install -y curl wget
+    - name: Run Datadog static analyzer
+      run: |
+        TOOL_DIRECTORY=$(mktemp -d)
+        cd "$TOOL_DIRECTORY" || exit 1
+        curl -L -o datadog-static-analyzer.zip https://github.com/DataDog/datadog-static-analyzer/releases/latest/download/datadog-static-analyzer-x86_64-unknown-linux-gnu.zip >/dev/null 2>&1 || exit 1
+        unzip datadog-static-analyzer >/dev/null 2>&1 || exit 1 \
+        CLI_LOCATION=$TOOL_DIRECTORY/datadog-static-analyzer
+        $CLI_LOCATION -g -i "${GITHUB_WORKSPACE}" -o /tmp/output.sarif -f sarif --cpus 2 || exit 1
+    - name: Upload SARIF to GitHub using the upload-sarif action
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: /tmp/output.sarif
