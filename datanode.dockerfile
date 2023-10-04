@@ -16,7 +16,7 @@
 # limitations under the License.
 
 FROM openjdk:8u332-jdk
-MAINTAINER Arctic
+LABEL maintainer="Arctic"
 USER root
 
 # Default to UTF-8 file.encoding
